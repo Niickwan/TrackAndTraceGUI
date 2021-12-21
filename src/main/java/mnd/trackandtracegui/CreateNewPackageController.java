@@ -109,7 +109,6 @@ public class CreateNewPackageController {
         }
     }
 
-
     @FXML
     public void initialize() {
         name.setText(sender.getName());
@@ -149,10 +148,41 @@ public class CreateNewPackageController {
 
     public void goToSearchPackage(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("user-start-screen.fxml"));
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             Scene scene = new Scene(loader.load());
             scene.getStylesheets().add("file:C:/Users/Nickwan/IdeaProjects/TrackAndTraceGUI/src/main/java/mnd/trackandtracegui/css/login.css");
+            stage.setTitle("Søg pakke");
+            stage.setScene(scene);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+    }
+
+    public void goToCreateNewPackage(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("create-new-package.fxml"));
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            scene.getStylesheets().add("file:C:/Users/Nickwan/IdeaProjects/TrackAndTraceGUI/src/main/java/mnd/trackandtracegui/css/login.css");
+            stage.setTitle("Opret ny forsendelse med track and trace");
+            stage.setScene(scene);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+    }
+
+    public void goToLogoutAndReturnToFrontPage(ActionEvent event) {
+        container.setSender(null);
+        container.setReceiver(null);
+        container.setCarrier(null);
+        container.setaPackage(null);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("start-screen.fxml"));
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            scene.getStylesheets().add("file:C:/Users/Nickwan/IdeaProjects/TrackAndTraceGUI/src/main/java/mnd/trackandtracegui/css/login.css");
+            stage.setTitle("Track And Trace");
             stage.setScene(scene);
         }catch (IOException io){
             io.printStackTrace();

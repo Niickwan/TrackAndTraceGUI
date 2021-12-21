@@ -12,6 +12,8 @@ import java.io.IOException;
 
 public class MainController {
     private CreateNewPackageController createNewPackageController = new CreateNewPackageController();
+    private UserStartController userStartController = new UserStartController();
+    private Container container = Container.getInstance();
     private Sender sender;
     private Stage stage;
     private Scene scene;
@@ -29,17 +31,20 @@ public class MainController {
     @FXML
     private TitledPane titledPane;
     @FXML
-    private ListView listView, listViewUser1, listViewUser2, listViewUser3;
+    private ListView listView;
+
 
     @FXML
     public void login(ActionEvent event) throws IOException  {
         sender = db.logIn(email.getText(), password.getText());
         if(sender != null) {
-            loggedIn.setText("LoggedIn");
-            //System.out.println(email.getText());
-            visNextForm(sender, event, "user-start-screen.fxml", "Welcome: " + sender.getName());
+//            loggedIn.setText("LoggedIn");
+            container.setSender(sender);
+            userStartController.userStartScreen(event);
+
+//            visNextForm(sender, event, "user-start-screen.fxml", "Welcome: " + sender.getName());
         } else {
-            loggedIn.setText("NONONO");
+            loggedIn.setText("Forkert email eller password");
         }
     }
 
@@ -105,7 +110,7 @@ public class MainController {
 
     @FXML
     public void initialize() {
-        db.getTntAllSearchInfo(2);
+//        db.getTntAllSearchInfo(2, accordion );
     }
 
     public void searchTnt(ActionEvent event) {
@@ -123,4 +128,28 @@ public class MainController {
     }
 
 
+    public void goToStartScreen(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("start-screen.fxml"));
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            scene.getStylesheets().add("file:C:/Users/Nickwan/IdeaProjects/TrackAndTraceGUI/src/main/java/mnd/trackandtracegui/css/login.css");
+            stage.setScene(scene);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+    }
+
+    public void goToLogoutAndReturnToFrontPage(ActionEvent event) {
+        sender = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("start-screen.fxml"));
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            scene.getStylesheets().add("file:C:/Users/Nickwan/IdeaProjects/TrackAndTraceGUI/src/main/java/mnd/trackandtracegui/css/login.css");
+            stage.setScene(scene);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+    }
 }

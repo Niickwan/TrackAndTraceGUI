@@ -1,6 +1,7 @@
 package mnd.trackandtracegui;
 
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.sql.*;
@@ -399,7 +400,6 @@ public class MySQL {
                     "ORDER BY package.TrackingCode, package.LocationDateStamp DESC;";
             ResultSet resultset = statement.executeQuery(sql);
 
-
             int numberOfResults = 0;
             String locationDateStamp = "";
             String currentLocation = "";
@@ -410,8 +410,6 @@ public class MySQL {
                 // senderName, senderAddress, receiverName, receiverAddress, currentLocation, locationDateStamp,
 
                 result = resultset.getString("carrierName");
-                System.out.println(resultset.getString("carrierName"));
-                System.out.println("match");
                 resultatFundet = true;
                 locationDateStamp = resultset.getString(13);
                 currentLocation = resultset.getString(14);
@@ -433,38 +431,82 @@ public class MySQL {
         return result;
     }
 
-    public String getTntAllSearchInfo(int senderID) {
+
+    public String getTntAllSearchInfo(int senderID, Accordion accordion, String tntNo) {
+        int getLastFive = 0;
+        boolean stopFetch = false;
+
         String result = "";
-        int antal = 0;
-        System.out.println("getTntAllSearchInfo");
+        ArrayList<Integer> searchShipmentID = new ArrayList<>();
+        ArrayList<Integer> ShipmentID = new ArrayList<>();
+
+        // Get all shipmentID's linked to SenderID
         try {
-            System.out.println("getTntAllSearchInfo2");
             Connection conn = connectionToMySql();
             Statement statement = conn.createStatement();
-            String sql3 = "SELECT * FROM " +
-                    "package INNER JOIN sender ON package.fk_SenderID = sender.SenderID WHERE (((sender.SenderID)=2));";
-
-            // While() -> 3 variabler, der indeholder 3 seneste og forskellige ShipmentID's
-
-            String sql2 = "SELECT * FROM package WHERE fk_SenderID = " + senderID + " ORDER BY PackageEventID DESC";
-            ResultSet resultset = statement.executeQuery(sql2);
-            for (int i = 0; i < 3; i++) {
-                while (resultset.next() && i < antal) {
-                    System.out.println("************************************");
-                    System.out.print(resultset.getInt("PackageEventID"));
-                    System.out.print(" - ");
-                    System.out.print(resultset.getInt("ShipmentID"));
-                    System.out.println("\n************************************");
-                    i++;
-                }
+            String sql = "";
+            if(!tntNo.equalsIgnoreCase("0")) {
+                accordion.getPanes().clear();
+                sql = "SELECT ShipmentID FROM package WHERE fk_SenderID = " + senderID + " && TrackingCode = '" + tntNo + "' ORDER BY PackageEventID DESC";
+            } else {
+                sql = "SELECT ShipmentID FROM package WHERE fk_SenderID = " + senderID + " ORDER BY PackageEventID DESC";
             }
-            //System.out.println(resultset2.getInt("some_alias"));
+
+            ResultSet resultset = statement.executeQuery(sql);
+            while (resultset.next()) {
+                ShipmentID.add(resultset.getInt("ShipmentID"));
+            }
             conn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        System.out.println(counter);
+        for (int i = 0; i < ShipmentID.size()-1; i++) {
+            if(ShipmentID.get(i) != ShipmentID.get(i+1) && !stopFetch){
+                getLastFive++;
+                searchShipmentID.add(ShipmentID.get(i));
+                if(getLastFive == 5) {
+                    stopFetch = true;
+                }
+            }
+            if(i == ShipmentID.size()-2) {
+                searchShipmentID.add(ShipmentID.get(i));
+            }
+        }
+
+//        for (int i = 0; i < searchShipmentID.size(); i++) {
+//            System.out.println(searchShipmentID.get(i));
+//
+//        }
+
+        // Create Accordion(Table) with last 5 shipments
+        for (int i = 0; i < searchShipmentID.size() && i < 5; i++) {
+            accordion.getPanes().add(setAccordion(searchShipmentID.get(i)));
+        }
+
         return result;
+    }
+
+    private TitledPane setAccordion(int shipmentID) {
+        TitledPane titledPane = new TitledPane();
+        VBox content = new VBox();
+        content.getChildren().add(new Label(String.format("%-53s %-50s", "DATO", "LOKATION")));
+        titledPane.setContent(content);
+        try {
+            Connection conn = connectionToMySql();
+            Statement statement = conn.createStatement();
+            String sql = "SELECT LocationDateStamp, CurrentLocation, TrackingCode FROM package WHERE ShipmentID = " + shipmentID + " ORDER BY PackageEventID DESC";
+
+            ResultSet resultset = statement.executeQuery(sql);
+            while (resultset.next()) {
+                titledPane.setText("Track and Trace: " + resultset.getString("TrackingCode"));
+                content.getChildren().add(new Label(String.format("%-50s %-50s", resultset.getString("LocationDateStamp"), resultset.getString("CurrentLocation"))));
+                titledPane.setContent(content);
+            }
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return titledPane;
     }
 }
 

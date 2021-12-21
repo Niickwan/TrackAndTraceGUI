@@ -2,20 +2,22 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mnd.trackandtracegui.MainController">
-   <top>
-      <Label fx:id="loggedIn" text="" BorderPane.alignment="CENTER" />
-   </top>
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
+            <Label fx:id="loggedIn" alignment="CENTER" layoutX="258.0" layoutY="113.0" prefHeight="17.0" prefWidth="120.0" text="" textFill="RED" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
             <TextField fx:id="email" layoutX="300.0" layoutY="140.0" prefHeight="25.0" prefWidth="200.0" />
             <Label layoutX="223.0" layoutY="144.0" text="Email" AnchorPane.leftAnchor="225.0" />
             <PasswordField fx:id="password" layoutX="300.0" layoutY="203.0" prefWidth="200.0" />
             <Label layoutX="225.0" layoutY="207.0" text="Password" AnchorPane.leftAnchor="225.0" />
             <Button fx:id="onHelloButtonClick" layoutX="377.0" layoutY="256.0" mnemonicParsing="false" onAction="#login" text="Login" />
-            <Button layoutX="14.0" layoutY="544.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Tilbage" />
+            <Button layoutX="14.0" layoutY="544.0" mnemonicParsing="false" onAction="#goToStartScreen" prefHeight="25.0" prefWidth="75.0" text="Tilbage" />
             <Button layoutX="357.0" layoutY="369.0" mnemonicParsing="false" onAction="#goToCreateUserScreen" text="Opret Bruger" />
          </children>
       </AnchorPane>

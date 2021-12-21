@@ -9,16 +9,16 @@
     <top>
         <HBox BorderPane.alignment="CENTER">
             <children>
-                <Button mnemonicParsing="false" text="Logud">
+                <Button onAction="#goToLogoutAndReturnToFrontPage" mnemonicParsing="false" text="Logud">
                     <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </HBox.margin></Button>
                 <Pane HBox.hgrow="ALWAYS" />
-                <Button mnemonicParsing="false" text="Send Pakke">
+                <Button onAction="#goToCreateNewPackage" mnemonicParsing="false" text="Send Pakke">
                     <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="5.0" top="10.0" />
                     </HBox.margin></Button>
-                <Button mnemonicParsing="false" text="Find Pakke">
+                <Button onAction="#goToSearchPackage" mnemonicParsing="false" text="Find Pakke">
                     <HBox.margin>
                         <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                     </HBox.margin></Button>
