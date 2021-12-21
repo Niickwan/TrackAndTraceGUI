@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mnd.trackandtracegui.MainController">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="230.0" layoutY="186.0" text="Email:" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="186.0" />
+            <Label layoutX="230.0" layoutY="126.0" text="Navn:" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="126.0" />
+            <Label layoutX="230.0" layoutY="246.0" text="Adresse:" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="246.0" />
+            <Label layoutX="230.0" layoutY="306.0" text="Postnummer:" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="306.0" />
+            <Label layoutX="230.0" layoutY="366.0" text="Password:" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="366.0" />
+            <TextField fx:id="name" layoutX="326.0" layoutY="123.0" promptText="Navn" AnchorPane.topAnchor="123.0" />
+            <TextField fx:id="email" layoutX="326.0" layoutY="183.0" promptText="Email" AnchorPane.topAnchor="183.0" />
+            <TextField fx:id="address" layoutX="326.0" layoutY="243.0" promptText="Adresse" AnchorPane.topAnchor="243.0" />
+            <TextField fx:id="postalCode" layoutX="326.0" layoutY="303.0" promptText="Postnummer" AnchorPane.topAnchor="303.0" />
+            <PasswordField fx:id="password" layoutX="326.0" layoutY="363.0" promptText="Password" AnchorPane.topAnchor="363.0" />
+            <Button layoutX="352.0" layoutY="432.0" mnemonicParsing="false" onAction="#createUser" text="Opret Bruger" />
+            <Button layoutX="14.0" layoutY="561.0" mnemonicParsing="false" onAction="#backToLogin" text="Tilbage" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
