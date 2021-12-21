@@ -5,11 +5,10 @@ Features
 - login
 - Create new user
 - Search package using Track and trace number
+- see last 5 packages
 
 TODO
 - Logout
-- Fetch last 3-5 packages
 - Edit user
-- Button links
 
 Created By SuperAwesomeGroup
